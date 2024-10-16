@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            body {text-align:center}
+            .board {
+                display: flex;
+                justify-content: center;
+                margin-left: 30%;
+                margin-right:30%;
+                flex-wrap:wrap;
+            }
+            .square {
+                width: 150px;
+                height: 150px;
+                border: 2px solid;
+                border-color:#000000;
+                margin: 5px;
+                padding: 5px 5px;
+                text-align: center;
+                font-size: 120px;
+            }
+            .square:hover {background-color:#b1e8ed}
+            .text {
+                border: 1px solid #000000;
+                padding: 5px;
+                display:inline-block;
+                margin-top:20px;
+                margin-bottom: 20px;    
+            }
+   
+
+        </style>
+
+        <script language="javascript">
+            let playerTurn = ""
+            
+            function playGame() {
+                num = Math.random()
+                if (num >= 0.5) {
+                    playerTurn = "X"
+                } else {
+                    playerTurn = "O"
+                }
+                document.getElementById("turn").innerHTML = "Player " + playerTurn + "'s Turn"
+            }
+           
+            function squareClicked(e) {
+                sq = e.target
+                sqIndex = sq.id.charAt(sq.id.length - 1)
+                alert("Square " + sqIndex + " clicked")
+                if (sq.innerHTML == "") {
+                    sq.innerHTML = playerTurn
+                }
+                if (playerTurn == "X") {
+                    playerTurn = "O"
+                } else {
+                    playerTurn = "X"
+                }
+                document.getElementById("turn").innerHTML = "Player " + playerTurn + "'s Turn"
+            }
+
+            
+
+        window.onload = function() {
+            playGame()
+        }
+        </script>
+
+        </head>
+    <body>
+        <h1>Let's Play Tic Tac Toe!</h1>
+        <div class="text" id="turn">Player Turn Div</div>
+        <div class="board">
+        <script language="javascript">
+            const NUM_SQUARES = 9;
+            for (i=0; i<NUM_SQUARES; i++) {
+                id = "sq"+i;
+                document.write("<div class='square' id='" + id + "'></div>");
+                document.getElementById(id).onclick = squareClicked;
+            }
+            
+
+        </script>
+        </div>
+
+
+        <div class="text">Win Condition Div</div>
+
+
+        <br>
+
+        <input type="submit" value="Start Game" id="startBtn">
+        <script>
+            btn = document.getElementById('startBtn')
+            btn.onclick = function() {
+                for (i=0; i<NUM_SQUARES; i++) {
+                    id = "sq"+i;
+                    if (document.getElementById(id).innerHTML != "") {
+                        document.getElementById(id).innerHTML = ""
+                    }   
+                }
+                playGame()
+            }
+        </script>
+        
+    </body>
+</html>

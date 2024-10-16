@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            body {text-align:center}
+            .board {
+                display: flex;
+                justify-content: center;
+                margin-left: 30%;
+                margin-right:30%;
+                flex-wrap:wrap;
+            }
+            .square {
+                width: 150px;
+                height: 150px;
+                border: 2px solid;
+                border-color:#000000;
+                margin: 5px;
+                padding: 5px 5px;
+                text-align: center;
+                font-size: 120px;
+            }
+            .square:hover {background-color:#b1e8ed}
+            .text {
+                border: 1px solid #000000;
+                padding: 5px;
+                display:inline-block;
+                margin-top:20px;
+                margin-bottom: 20px;    
+            }
+   
+
+        </style>
+
+        <script language="javascript">
+            let playerTurn = ""
+            let keepPlaying = true
+            
+            function playGame() {
+                num = Math.random()
+                if (num >= 0.5) {
+                    playerTurn = "X"
+                } else {
+                    playerTurn = "O"
+                }
+                document.getElementById("turn").innerHTML = "Player " + playerTurn + "'s Turn"
+                document.getElementById("win").innerHTML = "Let's Play!"
+                keepPlaying = true
+            }
+            
+            function makeMoves() {
+                var moves = new Array(9)
+                for (i=0; i<9; i++) {
+                    moves[i] = '-'
+                }
+                moves.forEach(function(item, i) {
+                    square = document.getElementById("sq"+i).innerHTML
+                    if ((square == 'X') || (square == 'O')) {
+                        moves[i] = square
+                    } else {
+                        moves[i] = '-'
+                    }
+                })
+
+                var winConditions = new Array(9)
+                for (i=0; i<8; i++) {
+                    winConditions[i] = '-'
+                }
+                winConditions[0] = moves[0] + moves[1] + moves[2]
+                winConditions[1] = moves[3] + moves[4] + moves[5]
+                winConditions[2] = moves[6] + moves[7] + moves[8]
+                winConditions[3] = moves[0] + moves[3] + moves[6]
+                winConditions[4] = moves[1] + moves[4] + moves[7]
+                winConditions[5] = moves[2] + moves[5] + moves[8]
+                winConditions[6] = moves[0] + moves[4] + moves[8]
+                winConditions[7] = moves[2] + moves[4] + moves[6]
+
+                winConditions.forEach(function(item, i) {
+                    if (winConditions[i] == 'XXX') {
+                        document.getElementById('win').innerHTML = 'Player X Wins!'
+                        document.getElementById('turn').innerHTML = 'Player X Wins!'
+                        keepPlaying = false
+                    } else if (winConditions[i] == 'OOO') {
+                        document.getElementById('win').innerHTML = 'Player O Wins!'
+                        document.getElementById('turn').innerHTML = 'Player O Wins!'
+                        keepPlaying = false
+                    } else {
+                        let hyphen = false
+                        for (i=0; i<8; i++){
+                            string = winConditions[i]
+                            for (j=0; j<3; j++) {
+                                if (string.charAt(j) == '-') {
+                                    hyphen = true
+                                    break
+                                }
+                            }
+                        }
+                        if (hyphen == false) {
+                            document.getElementById('win').innerHTML = 'We have reached a stalemate'
+                            document.getElementById('turn').innerHTML = 'We have reached a stalemate'
+                            keepPlaying = false
+                        }
+                    }
+                     
+                })
+            }
+
+            function squareClicked(e) {
+                if (keepPlaying == false) {
+                    return
+                }
+                sq = e.target
+                sqIndex = sq.id.charAt(sq.id.length - 1)
+                alert("Square " + sqIndex + " clicked")
+                if (sq.innerHTML == "") {
+                    sq.innerHTML = playerTurn
+                }
+                if (playerTurn == "X") {
+                    playerTurn = "O"
+                } else {
+                    playerTurn = "X"
+                }
+
+                document.getElementById("turn").innerHTML = "Player " + playerTurn + "'s Turn"
+
+                makeMoves()
+
+            }
+
+            
+
+        window.onload = function() {
+            playGame()
+        }
+        </script>
+
+        </head>
+    <body>
+        <h1>Let's Play Tic Tac Toe!</h1>
+        <div class="text" id="turn">Player Turn Div</div>
+        <div class="board">
+        <script language="javascript">
+            const NUM_SQUARES = 9;
+            for (i=0; i<NUM_SQUARES; i++) {
+                id = "sq"+i;
+                document.write("<div class='square' id='" + id + "'></div>");
+                document.getElementById(id).onclick = squareClicked;
+            }
+            
+
+        </script>
+        </div>
+
+
+        <div class="text" id="win">Let's Play!</div>
+
+
+        <br>
+
+        <input type="submit" value="Start Game" id="startBtn">
+        <script>
+            btn = document.getElementById('startBtn')
+            btn.onclick = function() {
+                for (i=0; i<NUM_SQUARES; i++) {
+                    id = "sq"+i;
+                    if (document.getElementById(id).innerHTML != "") {
+                        document.getElementById(id).innerHTML = ""
+                    }   
+                }
+                playGame()
+            }
+        </script>
+        
+    </body>
+</html>
