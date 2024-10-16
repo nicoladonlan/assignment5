@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            body {text-align:center}
+            .board {
+                display: flex;
+                justify-content: center;
+                margin-left: 30%;
+                margin-right:30%;
+                flex-wrap:wrap;
+            }
+            .square {
+                width: 150px;
+                height: 150px;
+                border: 2px solid;
+                border-color:#000000;
+                margin: 5px;
+                padding: 5px 5px;
+                text-align: center;
+                font-size: 120px;
+            }
+            .square:hover {background-color:#b1e8ed}
+            .text {
+                border: 1px solid #000000;
+                padding: 5px;
+                display:inline-block;
+                margin-top:20px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Let's Play Tic Tac Toe!</h1>
+
+        <div class="text">Player Turn Div</div>
+
+        <div class="board">
+        <script language="javascript">
+            const NUM_SQUARES = 9;
+            for (i=0; i<NUM_SQUARES; i++) {
+                id = "sq"+i;
+                document.write("<div class='square' id='" + id + "'></div>");
+            }
+            document.getElementById("sq2").innerHTML = "X"
+            document.getElementById("sq3").innerHTML = "O"
+        </script>
+        </div>
+
+        <div class="text">Win Condition Div</div>
+    </body>
+</html>
